@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+\begin{document}
+
+%% Grouped Bar Charts
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,%vertical bar chart
+            enlarge x limits=0.3,%prevents our bars falling of the plot
+            legend style={at={(0.5,-0.15)},
+              anchor=north,legend columns=-1},%position legend, given a column per entry
+            xlabel={Year},%set our x-axis label
+            ylabel={\# of Data Entries},%we can use \LaTeX in all our labels
+            xtick=data,%have ticks only at the x-values given by the data
+            nodes near coords,%add values to our bars
+            nodes near coords align={vertical},
+            x tick label style={/pgf/number format/.cd,%
+                set thousands separator={}},%Fixes the comma in the year
+            ]
+        % Add the bars for Butter
+        \addplot+ table[x=Year, y=Butter, row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        % Add the bars for Cheese, changing the colour
+        \addplot+ [fill=orange] table[x=Year, y=Cheese, row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        % Add the bars for Potatoes (maincrop)
+        \addplot+ table[x=Year, y=Potatoes (maincrop), row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        % Add the bars for Potatoes (earlies)
+        \addplot+ table[x=Year, y=Potatoes (earlies), row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        % Add legend
+        \legend{Butter,Cheese,Potatoes (main),Potatoes (early)}
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+%% Stacked Bar Charts
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar stacked,%vertical stacked bar chart
+            enlarge y limits=0.3,%prevents our values falling of the plot
+            legend style={at={(1.05,0.5)},
+              anchor=west,legend columns=1},%position legend, one long column
+            xlabel={\Huge{}Year},%set our x-axis label, changing font size
+            ylabel={\Huge{}\# of Data Entries},%we can use \LaTeX in all our labels
+            xtick=data,%have ticks only at the x-values given by the data
+            nodes near coords,%add values to our bars
+            nodes near coords align={vertical},
+            x tick label style={/pgf/number format/.cd,%
+                set thousands separator={}},%Fixes the comma in the year
+            ]
+        \addplot+ table[x=Year, y=Butter, row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        \addplot+ table[x=Year, y=Cheese, row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        \addplot+ table[x=Year, y=Potatoes (maincrop), row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        \addplot+ table[x=Year, y=Potatoes (earlies), row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        \legend{Butter,Cheese,Potatoes (main),Potatoes (early)}
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+%% Horizontal Bar Charts
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xbar,%horizontal bar chart
+            xlabel={\# of Butter Entries},%set our x-axis label
+            ylabel={Year},%we can use \LaTeX in all our labels
+            ytick=data,%have ticks only at the y-values given by the data, i.e. years
+            y tick label style={/pgf/number format/.cd,%
+                set thousands separator={}},%Fixes the comma in the year
+            ]
+        % Add the bars for Butter
+        \addplot+ table[y=Year, x=Butter, row sep=crcr, col sep=comma]{../data/commodityentries.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+\end{document}

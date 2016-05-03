@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{pgfplots}
+\usepgfplotslibrary[statistics]%There are many libraries for PGFPlots, this one included box plots
+\pgfplotsset{height=20cm, width=12cm, compat=1.9}%I've set the size for all pgfplots here
+\begin{document}
+
+%% Box Plot - Cost vs. Commodity
+% Note there is a 'boxplot prepared' class, which take whiskers, quartiles and median rather than all the data (see the PGFPlots manual section 5.12.1)
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Commodity},%set our x-axis label
+            ylabel={Cost, £/tonne},%set our y-axis label
+            boxplot/draw direction=y,%draw our plots vertically
+            ]
+        % Add the box for Butter
+        \addplot+[boxplot] table[y=Butter (£/tonnes), row sep=crcr, col sep=comma]{../data/commodityprices.csv};
+        % Add the box for Cheese
+        \addplot+[boxplot] table[y=Cheese (£/tonnes), row sep=crcr, col sep=comma]{../data/commodityprices.csv};
+        % Add the box for Potatoes (maincrop)
+        \addplot+[boxplot] table[y=Potatoes (maincrop; £/tonnes), row sep=crcr, col sep=comma]{../data/commodityprices.csv};
+        % Add the box for Potatoes (earlies)
+        \addplot+[boxplot] table[y=Potatoes (earlies; £/tonnes), row sep=crcr, col sep=comma]{../data/commodityprices.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+\end{document}

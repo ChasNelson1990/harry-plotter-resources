@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+\begin{document}
+
+%% Scatter Plot - Butter: Week vs. Price (coloured by year)
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Week of the Year},%set our x-axis label
+            ylabel={Price of Butter, £/tonne},%we can use \LaTeX in all our labels
+            colorbar,%Shows a colours bar for the years (in newer versions colorbar as pallete will allow a discrete colour bar)
+            xmin=0,xmax=52,%set x-axis limits
+            ]
+        % Add the points for Butter
+        \addplot+[scatter,only marks,scatter src=explicit] table[x=Week, y=Butter (£/tonnes), meta=Year, row sep=crcr, col sep=comma]{../data/commodityprices.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+%% Line Plot - Butter: Week vs. Price (one line per year)
+% Note that for this particular plot, the data has been reorganised into a different csv file
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Week of the Year},%set our x-axis label
+            ylabel={Price of Butter, £/tonne},%we can use \LaTeX in all our labels
+            xmin=0,xmax=52,%set x-axis limits
+            ]
+        % Add the points for Butter 2016
+        \addplot+[] table[x=Week, y=Butter (£/tonnes) 2016, row sep=crcr, col sep=comma]{../data/commoditypricesLaTeX.csv};
+        % Add the points for Butter 2015
+        \addplot+[] table[x=Week, y=Butter (£/tonnes) 2015, row sep=crcr, col sep=comma]{../data/commoditypricesLaTeX.csv};
+        % Add the points for Butter 2014
+        \addplot+[] table[x=Week, y=Butter (£/tonnes) 2014, row sep=crcr, col sep=comma]{../data/commoditypricesLaTeX.csv};
+        % Add the points for Butter 2013
+        \addplot+[] table[x=Week, y=Butter (£/tonnes) 2013, row sep=crcr, col sep=comma]{../data/commoditypricesLaTeX.csv};
+        \legend{2016,2015,2014,2013}
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+%% Line Plot w/ Error Bars - Butter: Week vs. Price (one line per year)
+% Note that for this particular plot, the data has been reorganised into a different csv file
+% Note that a static error has been used for this example, data from files can be loaded as other data has been
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Week of the Year},%set our x-axis label
+            ylabel={Price of Butter, £/tonne},%we can use \LaTeX in all our labels
+            xmin=0,xmax=52,%set x-axis limits
+            ]
+        % Add the points for Butter 2016 with error bars of size 20
+        \addplot+[error bars/.cd, y dir=both,y fixed=50,] table[x=Week, y=Butter (£/tonnes) 2013, row sep=crcr, col sep=comma]{../data/commoditypricesLaTeX.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+\end{document}
