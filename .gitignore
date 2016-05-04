@@ -1,0 +1,10 @@
+*.blg
+*.aux
+*.bbl
+*.log
+*.*backup
+*.*bak
+*.*~
+*.bak
+**/build/
+.Rhistory
